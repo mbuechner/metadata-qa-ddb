@@ -34,3 +34,4 @@ metadata-qa-ddb.iml
 
 # Maven Target directory
 target/
+/.env
