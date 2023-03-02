@@ -18,20 +18,16 @@ RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc |
 	apt-get update && \
 	apt-get install -y --no-install-recommends r-base r-cran-tidyverse r-cran-stringr r-cran-gridextra
 
-WORKDIR /opt
 
 # Installing software
-
 COPY . /opt/metadata-qa-ddb
+WORKDIR /opt/metadata-qa-ddb
+
 RUN export MQA_VERSION=1.0.0 && \
-	cd metadata-qa-ddb &&\
 	mvn package -DskipTests && \
 	mv target/metadata-qa-ddb-${MQA_VERSION}-jar-with-dependencies.jar target/metadata-qa-ddb.jar && \
 	mkdir data/ data/input data/output
 
 ENV MQA_JAR=/opt/metadata-qa-ddb/target/metadata-qa-ddb.jar
 
-
-RUN chmod +x /opt/metadata-qa-ddb/docker-start.sh	
-WORKDIR /opt/metadata-qa-ddb
-ENTRYPOINT ["/bin/bash", "-c", "/opt/metadata-qa-ddb/docker-start.sh"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]
