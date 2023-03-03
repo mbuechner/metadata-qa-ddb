@@ -25,9 +25,13 @@ WORKDIR /opt/metadata-qa-ddb
 
 RUN export MQA_VERSION=1.0.0 && \
 	mvn package -DskipTests && \
-	mv target/metadata-qa-ddb-${MQA_VERSION}-jar-with-dependencies.jar target/metadata-qa-ddb.jar && \
-	mkdir data/ data/input data/output
+	mv target/metadata-qa-ddb-${MQA_VERSION}-jar-with-dependencies.jar target/metadata-qa-ddb.jar
 
-ENV MQA_JAR=/opt/metadata-qa-ddb/target/metadata-qa-ddb.jar
+RUN tar czfv /opt/metadata-qa-ddb.tar.gz . && \
+	mv docker-entrypoint.sh /usr/local/bin && \
+	chmod +x /usr/local/bin/docker-entrypoint.sh && \
+	rm -rf /opt/metadata-qa-ddb/
 
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+WORKDIR /opt/
+
+ENTRYPOINT ["docker-entrypoint.sh"]
