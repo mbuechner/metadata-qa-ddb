@@ -4,7 +4,7 @@ ENV TZ=Europe/Berlin
 
 # Install Ubuntu requirements
 RUN sed -i 's|http://|http://de.|g' /etc/apt/sources.list
-RUN apt-get update && apt-get install -y openjdk-11-jdk wget gnupg curl jq maven lsof php php-http-request2 php-mysql php-sqlite3 mysql-client
+RUN apt-get update && apt-get install -y openjdk-11-jdk wget gnupg curl jq maven lsof php php-http-request2 php-mysql php-sqlite3 mysql-client nano pip
 
 # SQLite 
 RUN apt-get install sqlite3
@@ -18,6 +18,8 @@ RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc |
 	apt-get update && \
 	apt-get install -y --no-install-recommends r-base r-cran-tidyverse r-cran-stringr r-cran-gridextra
 
+# Installing Prefect
+RUN pip install -U "prefect==1.4.1"
 
 # Installing software
 COPY . /opt/metadata-qa-ddb
