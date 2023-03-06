@@ -89,33 +89,33 @@ def notify(data):
 
 with Flow("DDB quality assessment flow") as f:
     # both tasks will be executed in home directory
-    # download = download_task()
-    # unzip = unzip_task()
-    # extract_basic_info = extract_basic_info_task()
-    # import_basic_info = import_basic_info_task()
-    # harvest_edm = harvest_edm_task()
+    download = download_task()
+    unzip = unzip_task()
+    extract_basic_info = extract_basic_info_task()
+    import_basic_info = import_basic_info_task()
+    harvest_edm = harvest_edm_task()
 
-    # index_ddb_edm = measure_ddb_edm_task()
-    # index_marc = measure_marc_task()
-    # index_ddb_dc = measure_ddb_dc_task()
-    # index_lido = measure_lido_task()
-    # index_mets_mods = measure_mets_mods_task()
+    index_ddb_edm = measure_ddb_edm_task()
+    index_marc = measure_marc_task()
+    index_ddb_dc = measure_ddb_dc_task()
+    index_lido = measure_lido_task()
+    index_mets_mods = measure_mets_mods_task()
 
     measure_ddb_edm = measure_ddb_edm_task() # upstream_tasks=[index_ddb_edm])
     measure_marc = measure_marc_task(upstream_tasks=[measure_ddb_edm]) # upstream_tasks=[index_marc])
     measure_ddb_dc = measure_ddb_dc_task(upstream_tasks=[measure_marc]) # upstream_tasks=[measure_ddb_dc])
-    # measure_lido = measure_lido_task()
-    # measure_mets_mods = measure_mets_mods_task()
+    measure_lido = measure_lido_task()
+    measure_mets_mods = measure_mets_mods_task()
 
     create_issue_table = create_issue_table_task(upstream_tasks=[measure_ddb_dc])
     import_ddb_edm = import_ddb_edm_task(upstream_tasks=[create_issue_table]) # upstream_tasks=[measure_ddb_edm])
     import_marc = import_marc_task(upstream_tasks=[import_ddb_edm]) # import_ddb_edm measure_marc
     import_dc = import_dc_task(upstream_tasks=[import_marc]) # upstream_tasks=[measure_ddb_dc])
-    # import_lido = import_lido_task(upstream_tasks=[import_dc]) # upstream_tasks=[measure_lido])
-    # import_mets_mods = import_mets_mods_task(upstream_tasks=[import_lido]) # upstream_tasks=[measure_mets_mods])
+    import_lido = import_lido_task(upstream_tasks=[import_dc]) # upstream_tasks=[measure_lido])
+    import_mets_mods = import_mets_mods_task(upstream_tasks=[import_lido]) # upstream_tasks=[measure_mets_mods])
     calculate_aggregations = calculate_aggregations_task(upstream_tasks=[import_dc])
 
-    # notify(harvest_edm)
+    notify(harvest_edm)
 
 
 out = f.run()
