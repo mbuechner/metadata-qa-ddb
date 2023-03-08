@@ -13,11 +13,15 @@ echo "\$MQA_MY_PASSWORD=$MQA_MY_PASSWORD";
 echo "\$MQA_SOLR_HOST=$MQA_SOLR_HOST";
 echo "\$MQA_SOLR_PORT=$MQA_SOLR_PORT";
 
-echo "Unpacking /opt/metadata-qa-ddb.tar.gz into $MQA_DATA...";
+echo "Unpacking /opt/metadata-qa-ddb.tar.gz into $MQA_DATA ...";
 mkdir -p $MQA_DATA
-tar --overwrite --no-same-permissions -xzvf /opt/metadata-qa-ddb.tar.gz -C $MQA_DATA
+tar --overwrite -xzvf /opt/metadata-qa-ddb.tar.gz -C $MQA_DATA
 
 echo "Create folder ${MQA_DATA}/data, ${MQA_DATA}/data/input and ${MQA_DATA}/data/output";
 mkdir ${MQA_DATA}/data ${MQA_DATA}/data/input ${MQA_DATA}/data/output
 
-prefect server start
+echo "Start Prefect workflow in background ..."
+python3 $MQA_DATA/prefect2_workflow.py &
+
+echo "Start Prefect server ..."
+prefect server start --host 0.0.0.0

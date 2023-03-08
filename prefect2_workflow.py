@@ -1,3 +1,6 @@
+from prefect import flow, task
+from prefect_shell import ShellOperation
+
 @task(name="scripts/create_database.mysql.sh", 
       description="create the database tables")
 def createdb_task():
