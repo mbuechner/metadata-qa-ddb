@@ -45,7 +45,7 @@ def unzip_task():
 
 @task(name="scripts/ingest/03_extract_basic_info_from_downloaded_files.sh", 
       description="extract file info (path")
-def  metadata schema():
+def extract_basic_info_task():
     with ShellOperation(
         commands=[
             "scripts/ingest/03_extract_basic_info_from_downloaded_files.sh"
