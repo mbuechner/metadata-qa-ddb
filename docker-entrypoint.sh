@@ -15,9 +15,9 @@ echo "\$MQA_SOLR_PORT=$MQA_SOLR_PORT";
 
 echo "Unpacking /opt/metadata-qa-ddb.tar.gz into $MQA_DATA...";
 mkdir -p $MQA_DATA
-tar --overwrite -xzvf /opt/metadata-qa-ddb.tar.gz -C $MQA_DATA
+tar --overwrite --no-same-permissions -xzvf /opt/metadata-qa-ddb.tar.gz -C $MQA_DATA
 
 echo "Create folder ${MQA_DATA}/data, ${MQA_DATA}/data/input and ${MQA_DATA}/data/output";
 mkdir ${MQA_DATA}/data ${MQA_DATA}/data/input ${MQA_DATA}/data/output
 
-tail -f /dev/null
+prefect server start

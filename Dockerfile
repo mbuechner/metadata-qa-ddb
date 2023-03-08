@@ -19,7 +19,7 @@ RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc |
 	apt-get install -y --no-install-recommends r-base r-cran-tidyverse r-cran-stringr r-cran-gridextra
 
 # Installing Prefect
-RUN pip install -U "prefect==1.4.1"
+RUN pip install -U "prefect==2.8.4" "prefect-shell==0.1.5"
 
 # Installing software
 COPY . /opt/metadata-qa-ddb
@@ -37,3 +37,4 @@ RUN tar czfv /opt/metadata-qa-ddb.tar.gz . && \
 WORKDIR /opt/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
+EXPOSE 4200
