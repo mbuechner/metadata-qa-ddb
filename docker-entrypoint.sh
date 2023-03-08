@@ -21,8 +21,8 @@ echo "Create folder ${MQA_DATA}/data, ${MQA_DATA}/data/input and ${MQA_DATA}/dat
 mkdir ${MQA_DATA}/data ${MQA_DATA}/data/input ${MQA_DATA}/data/output
 
 echo "Start Prefect workflow in background ..."
-cd $MQA_DATA
-python3 prefect2_workflow.py &
+# cd $MQA_DATA
+# python3 prefect2_workflow.py &
 
 echo "Start Prefect server ..."
 prefect server start --host 0.0.0.0
