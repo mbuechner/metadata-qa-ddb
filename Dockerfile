@@ -50,5 +50,5 @@ RUN export MQA_VERSION=1.0.0 && \
 	mv supervisord.conf /etc/supervisor/conf.d/supervisord.conf && \
 	mv configuration.cnf.docker configuration.cnf
 
-ENTRYPOINT ["/opt/metadata-qa-ddb/docker-entrypoint.sh"]
+ENTRYPOINT ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 EXPOSE 4200
