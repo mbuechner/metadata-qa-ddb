@@ -1,40 +1,54 @@
 FROM ubuntu:jammy
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Berlin
+ENV RUN_USER nobody
+ENV RUN_GROUP 0
 
-# Install Ubuntu requirements
-RUN sed -i 's|http://|http://de.|g' /etc/apt/sources.list
-RUN apt-get update && apt-get install -y openjdk-11-jdk wget gnupg curl jq maven lsof php php-http-request2 php-mysql php-sqlite3 mysql-client nano pip
+# Install requirements
+RUN sed -i 's|http://|http://de.|g' /etc/apt/sources.list && \
+	apt-get update && \ 
+	apt-get install -y \
+		curl \
+		gnupg \
+		htop \
+		jq \
+		lsof \
+		maven \
+		mysql-client \
+		nano \
+		openjdk-11-jdk \
+		php \
+		php-http-request2 \
+		php-mysql \
+		php-sqlite3 \
+		pip \
+		sqlite3 \
+		supervisor \
+		wget
 
-# SQLite 
-RUN apt-get install sqlite3
-
-# Java
-RUN apt-get install openjdk-11-jdk
-
-# R
+# Install R
 RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | gpg --dearmor -o /usr/share/keyrings/r-project.gpg && \
 	echo "deb [signed-by=/usr/share/keyrings/r-project.gpg] https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" | tee -a /etc/apt/sources.list.d/r-project.list && \
-	apt-get update && \
-	apt-get install -y --no-install-recommends r-base r-cran-tidyverse r-cran-stringr r-cran-gridextra
+	apt-get install -y \
+                r-base \
+                r-cran-gridextra \
+                r-cran-stringr \
+                r-cran-tidyverse
 
 # Installing Prefect
 RUN pip install -U "prefect==2.8.4" "prefect-shell==0.1.5"
 
 # Installing software
-COPY . /opt/metadata-qa-ddb
+COPY --chown=${RUN_USER}:${RUN_GROUP} . /opt/metadata-qa-ddb
 WORKDIR /opt/metadata-qa-ddb
 
 RUN export MQA_VERSION=1.0.0 && \
 	mvn package -DskipTests && \
-	mv target/metadata-qa-ddb-${MQA_VERSION}-jar-with-dependencies.jar target/metadata-qa-ddb.jar
+	mv target/metadata-qa-ddb-${MQA_VERSION}-jar-with-dependencies.jar target/metadata-qa-ddb.jar && \
+	rm -rf .git .github && \
+	chmod +x docker-entrypoint.sh && \
+	mv supervisord.conf /etc/supervisor/conf.d/supervisord.conf && \
+	mv configuration.cnf.docker configuration.cnf
 
-RUN tar czfv /opt/metadata-qa-ddb.tar.gz . && \
-	mv docker-entrypoint.sh /usr/local/bin && \
-	chmod +x /usr/local/bin/docker-entrypoint.sh && \
-	rm -rf /opt/metadata-qa-ddb/
-
-WORKDIR /opt/
-
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/opt/metadata-qa-ddb/docker-entrypoint.sh"]
 EXPOSE 4200

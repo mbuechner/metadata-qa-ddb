@@ -1,6 +1,6 @@
-JAR=$(echo target/metadata-qa-ddb.jar)
-INPUT_DIR=$(echo ${MQA_DATA}/data/input)
-OUTPUT_DIR=$(echo ${MQA_DATA}/data/output)
+JAR=target/metadata-qa-ddb.jar
+INPUT_DIR=$(echo ${MQA_DATA}/input)
+OUTPUT_DIR=$(echo ${MQA_DATA}/output)
 FTP_USER=$(echo $MQA_FTP_USER)
 FTP_PW=$(echo $MQA_FTP_PW)
 MY_HOST=$(echo $MQA_MY_HOST)
@@ -10,3 +10,4 @@ MY_USER=$(echo $MQA_MY_USER)
 MY_PASSWORD=$(echo $MQA_MY_PASSWORD)
 SOLR_HOST=$(echo $MQA_SOLR_HOST)
 SOLR_PORT=$(echo $MQA_SOLR_PORT)
+MYSQL_CONFIG_TYPE=TEMP_FILE

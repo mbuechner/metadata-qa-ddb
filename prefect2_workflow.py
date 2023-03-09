@@ -377,4 +377,5 @@ def main_flow():
     calculate_aggregations_task()
 
 
-main_flow()
+if __name__ == "main":
+    main_flow()
