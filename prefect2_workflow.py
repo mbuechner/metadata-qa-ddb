@@ -1,7 +1,7 @@
 from prefect import flow, task
 from prefect_shell import ShellOperation
 
-@task(name="scripts/create_database.mysql.sh", 
+@task(name="scripts/create_database.mysql.sh",
       description="create the database tables")
 def createdb_task():
     with ShellOperation(
@@ -16,7 +16,7 @@ def createdb_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/ingest/01_download_from_ftp.sh", 
+@task(name="scripts/ingest/01_download_from_ftp.sh",
       description="download files from FTP server")
 def download_task():
     with ShellOperation(
@@ -31,7 +31,7 @@ def download_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/ingest/02_extract_downloaded_files.sh", 
+@task(name="scripts/ingest/02_extract_downloaded_files.sh",
       description="unzip the downloaded zip files")
 def unzip_task():
     with ShellOperation(
@@ -46,7 +46,7 @@ def unzip_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/ingest/03_extract_basic_info_from_downloaded_files.sh", 
+@task(name="scripts/ingest/03_extract_basic_info_from_downloaded_files.sh",
       description="extract file info (path")
 def extract_basic_info_task():
     with ShellOperation(
@@ -61,7 +61,7 @@ def extract_basic_info_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/ingest/04_import_basic_info.mysql.sh", 
+@task(name="scripts/ingest/04_import_basic_info.mysql.sh",
       description="import file info into MySQL (it first transforms CSV to SQL)")
 def import_basic_info_task():
     with ShellOperation(
@@ -76,7 +76,7 @@ def import_basic_info_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/ingest/05_harvest_edm.mysql.sh", 
+@task(name="scripts/ingest/05_harvest_edm.mysql.sh",
       description="(optional) harvest Europeana-EDM records for each data sets")
 def harvest_edm_task():
     with ShellOperation(
@@ -91,7 +91,7 @@ def harvest_edm_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/index/01_index_ddb-edm.sh", 
+@task(name="scripts/index/01_index_ddb-edm.sh",
       description="index DDB-EDM records")
 def index_ddb_edm_task():
     with ShellOperation(
@@ -106,7 +106,7 @@ def index_ddb_edm_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/index/02_index_marc.sh", 
+@task(name="scripts/index/02_index_marc.sh",
       description="index MARC records")
 def index_marc_task():
     with ShellOperation(
@@ -121,7 +121,7 @@ def index_marc_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/index/03_index_ddb-dc.sh", 
+@task(name="scripts/index/03_index_ddb-dc.sh",
       description="index DDB-DC records")
 def index_ddb_dc_task():
     with ShellOperation(
@@ -136,7 +136,7 @@ def index_ddb_dc_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/index/04_index_lido.sh", 
+@task(name="scripts/index/04_index_lido.sh",
       description="index LIDO records")
 def index_lido_task():
     with ShellOperation(
@@ -151,7 +151,7 @@ def index_lido_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/index/05_index_mets-mods.sh", 
+@task(name="scripts/index/05_index_mets-mods.sh",
       description="index METS-MODS records")
 def index_mets_mods_task():
     with ShellOperation(
@@ -166,7 +166,7 @@ def index_mets_mods_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/process/01_process_ddb-edm.sh", 
+@task(name="scripts/process/01_process_ddb-edm.sh",
       description="quality assessment of DDB-EDM records")
 def measure_ddb_edm_task():
     with ShellOperation(
@@ -181,7 +181,7 @@ def measure_ddb_edm_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/process/02_process_marc.sh", 
+@task(name="scripts/process/02_process_marc.sh",
       description="quality assessment of MARC")
 def measure_marc_task():
     with ShellOperation(
@@ -196,7 +196,7 @@ def measure_marc_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/process/03_process_ddb-dc.sh", 
+@task(name="scripts/process/03_process_ddb-dc.sh",
       description="quality assessment of DDB-DC")
 def measure_ddb_dc_task():
     with ShellOperation(
@@ -211,7 +211,7 @@ def measure_ddb_dc_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/process/04_process_lido.sh", 
+@task(name="scripts/process/04_process_lido.sh",
       description="quality assessment of LIDO")
 def measure_lido_task():
     with ShellOperation(
@@ -226,7 +226,7 @@ def measure_lido_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/process/05_process_mets-mods.sh", 
+@task(name="scripts/process/05_process_mets-mods.sh",
       description="quality assessment of METS-MODS")
 def measure_mets_mods_task():
     with ShellOperation(
@@ -241,7 +241,7 @@ def measure_mets_mods_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/process/11_import_ddb-edm.mysql.sh", 
+@task(name="scripts/process/11_import_ddb-edm.mysql.sh",
       description="import DDB-EDM")
 def import_ddb_edm_task():
     with ShellOperation(
@@ -256,7 +256,7 @@ def import_ddb_edm_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/process/11_import_marc.mysql.sh", 
+@task(name="scripts/process/11_import_marc.mysql.sh",
       description="import MARC")
 def import_marc_task():
     with ShellOperation(
@@ -271,7 +271,7 @@ def import_marc_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/process/11_import_dc.mysql.sh", 
+@task(name="scripts/process/11_import_dc.mysql.sh",
       description="import DDB-DC")
 def import_dc_task():
     with ShellOperation(
@@ -286,7 +286,7 @@ def import_dc_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/process/11_import_lido.mysql.sh", 
+@task(name="scripts/process/11_import_lido.mysql.sh",
       description="import LIDO")
 def import_lido_task():
     with ShellOperation(
@@ -301,7 +301,7 @@ def import_lido_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/process/11_import_mets-mods.mysql.sh", 
+@task(name="scripts/process/11_import_mets-mods.mysql.sh",
       description="import METS-MODS")
 def import_mets_mods_task():
     with ShellOperation(
@@ -316,7 +316,7 @@ def import_mets_mods_task():
         my_script_process.wait_for_completion()
 
 
-@task(name="scripts/process/12_calculate_aggregations.mysql.sh", 
+@task(name="scripts/process/12_calculate_aggregations.mysql.sh",
       description="calculate aggregated results")
 def calculate_aggregations_task():
     with ShellOperation(
@@ -337,7 +337,7 @@ def ingest_flow():
     unzip_task()
     extract_basic_info_task()
     import_basic_info_task()
-    harvest_edm_task()
+    # harvest_edm_task()
 
 
 @flow
