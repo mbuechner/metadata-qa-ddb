@@ -337,7 +337,7 @@ def ingest_flow():
     unzip_task()
     extract_basic_info_task()
     import_basic_info_task()
-    # harvest_edm_task()
+    harvest_edm_task()
 
 
 @flow
@@ -345,8 +345,8 @@ def index_flow():
     index_ddb_edm_task()
     index_marc_task()
     index_ddb_dc_task()
-    # index_lido_task()
-    # index_mets_mods_task()
+    index_lido_task()
+    index_mets_mods_task()
 
 
 @flow
@@ -354,8 +354,8 @@ def measure_flow():
     measure_ddb_edm_task()
     measure_marc_task()
     measure_ddb_dc_task()
-    # measure_lido_task()
-    # measure_mets_mods_task()
+    measure_lido_task()
+    measure_mets_mods_task()
 
 
 @flow
@@ -363,8 +363,8 @@ def import_flow():
     import_ddb_edm_task()
     import_marc_task()
     import_dc_task()
-    # import_lido_task()
-    # import_mets_mods_task()
+    import_lido_task()
+    import_mets_mods_task()
 
 
 @flow
