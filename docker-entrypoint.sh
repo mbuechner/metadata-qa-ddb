@@ -15,8 +15,11 @@ echo "\$MQA_SOLR_PORT=$MQA_SOLR_PORT";
 echo "Create folder ${MQA_DATA}/input and ${MQA_DATA}/output ...";
 mkdir -p ${MQA_DATA}/input ${MQA_DATA}/output
 
+echo "Copy Metadata-qa-ddb to (writeable) temp directory ..."
+cp -R /opt/metadata-qa-ddb /tmp/metadata-qa-ddb
+
 echo "Add Prefect deployment in background ..."
-prefect deployment build prefect2_workflow.py:main_flow -a -n metadata-qa
+cd /tmp/metadata-qa-ddb && prefect deployment build prefect2_workflow.py:main_flow -a -n metadata-qa
 
 echo "Start Supervisor ..."
 supervisord -c /etc/supervisor/conf.d/supervisord.conf
