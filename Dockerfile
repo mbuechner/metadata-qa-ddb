@@ -10,7 +10,7 @@ RUN sed -i 's|http://|http://de.|g' /etc/apt/sources.list && \
 	apt-get install -y \
 		curl \
 		gnupg \
-		htop \
+		# htop \
 		jq \
 		lsof \
 		maven \
@@ -29,6 +29,7 @@ RUN sed -i 's|http://|http://de.|g' /etc/apt/sources.list && \
 # Install R
 RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | gpg --dearmor -o /usr/share/keyrings/r-project.gpg && \
 	echo "deb [signed-by=/usr/share/keyrings/r-project.gpg] https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" | tee -a /etc/apt/sources.list.d/r-project.list && \
+	apt-get update && \
 	apt-get install -y \
                 r-base \
                 r-cran-gridextra \
@@ -47,8 +48,7 @@ RUN export MQA_VERSION=1.0.0 && \
 	mv target/metadata-qa-ddb-${MQA_VERSION}-jar-with-dependencies.jar target/metadata-qa-ddb.jar && \
 	rm -rf .git .github && \
 	chmod +x docker-entrypoint.sh && \
-	mv supervisord.conf /etc/supervisor/conf.d/supervisord.conf && \
 	mv configuration.cnf.docker configuration.cnf
 
-ENTRYPOINT ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+ENTRYPOINT ["supervisord", "-c", "/opt/metadata-qa-ddb/supervisord.conf"]
 EXPOSE 4200

@@ -1,27 +1,37 @@
 version: '2'
 services:
-  data:
+  prefect:
     build: .
     ports:
-      - "8080:8080"
+      - "4200:4200"
     env_file: .env
     depends_on:
       - db
       - solr
     volumes:
-      - datavolume:/opt/metadata-qa-ddb/data/
+      - data:/opt/metadata-qa-ddb-data/
   db:
-    image: mariadb:10.10
+    image: mysql:8.0
     restart: always
-    env_file: .env
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=ddbkultur
+      - MYSQL_USER=ddbkultur
+      - MYSQL_PASSWORD=ddbkultur
     ports:
       - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
   solr:
-    image: solr:9.1.1
+    image: bitnami/solr:9.1.1
     restart: always
     ports:
       - "8983:8983"
+    volumes:
+      - solr_data:/bitnami
 networks:
   webnet:
 volumes:
-  datavolume:
+  data:
+  mysql_data:
+  solr_data:
