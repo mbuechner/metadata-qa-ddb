@@ -11,6 +11,7 @@ echo "\$MQA_MY_USER=$MQA_MY_USER";
 echo "\$MQA_MY_PASSWORD=$MQA_MY_PASSWORD";
 echo "\$MQA_SOLR_HOST=$MQA_SOLR_HOST";
 echo "\$MQA_SOLR_PORT=$MQA_SOLR_PORT";
+echo "\$MQA_VALIDATION_PARAMS=$MQA_VALIDATION_PARAMS";
 
 echo "Create folder ${MQA_DATA}/input and ${MQA_DATA}/output ...";
 mkdir -p ${MQA_DATA}/input ${MQA_DATA}/output
